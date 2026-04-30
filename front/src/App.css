@@ -1,0 +1,103 @@
+#root {
+  min-height: 100vh;
+}
+
+.containerPrincipal {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 188px 0 56px;
+}
+
+.containerPrincipal > button {
+  margin-right: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.home-panel {
+  min-height: calc(100vh - 180px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  align-items: center;
+  gap: var(--space-6);
+  padding: clamp(28px, 6vw, 72px);
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(37, 111, 125, 0.94), rgba(23, 32, 42, 0.92)),
+    url("/logo_Cast.png");
+  background-repeat: no-repeat;
+  background-position: right 8% center;
+  background-size: auto, min(38vw, 360px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.home-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -35% 45%;
+  height: 280px;
+  background: radial-gradient(circle, rgba(197, 139, 68, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
+.home-copy,
+.home-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin-bottom: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: #d7f3f7;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.home-copy h1 {
+  max-width: 680px;
+  color: #ffffff;
+  font-size: clamp(2.2rem, 5vw, 4.6rem);
+}
+
+.home-copy p {
+  max-width: 560px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.08rem;
+}
+
+.home-actions {
+  display: grid;
+  gap: var(--space-3);
+  align-self: center;
+  padding: var(--space-5);
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+}
+
+.home-actions .btn {
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.home-actions .btn-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 800px) {
+  .home-panel {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    background-size: auto, 220px;
+    background-position: right -40px top 24px;
+  }
+}

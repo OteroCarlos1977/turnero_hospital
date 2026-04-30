@@ -1,0 +1,11 @@
+{
+  "installCommand": "npm install && cd front && npm install",
+  "buildCommand": "cd front && npm run build",
+  "outputDirectory": "front/dist",
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
