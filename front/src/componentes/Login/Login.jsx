@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { InputField } from "../InputField/InputField";
@@ -16,7 +15,6 @@ export function Login({ onLoginSuccess }) {
 
   const onSubmit = async (formData) => {
     try {
-      // Solicitud de autenticación
       const loginResponse = await apiFetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -30,7 +28,6 @@ export function Login({ onLoginSuccess }) {
       if (!loginJson.error && loginJson.body) {
         const token = loginJson.body;
 
-        // Realizar la segunda solicitud para obtener el nombre y apellido del usuario
         localStorage.setItem('authToken', token);
 
         const userResponse = await apiFetch(`/api/usuarios/usuario/${formData.usuario}`, {
@@ -45,11 +42,8 @@ export function Login({ onLoginSuccess }) {
 
         if (!userJson.error && userJson.body) {
           const { nombre, apellido } = userJson.body[0];
-          console.log(nombre, apellido);
-          // Pasar el token y los datos del usuario al componente padre
           onLoginSuccess(token, { nombre, apellido });
 
-          // Navegar al componente Administrar pasando los datos
           navigate("/administrar", { state: { nombre, apellido } });
         } else {
           setLoginError('No se pudieron obtener los datos del usuario');
@@ -102,12 +96,12 @@ export function Login({ onLoginSuccess }) {
           <Button
               texto="Ingresar"
               className="btn-primary"
-              type="submit" // Reemplaza por la función deseada
+              type="submit"
             />
              <Button
             texto="Volver"
             onClick={() => navigate("/")}
-            tooltip="Regresar a la página anterior" // Tooltip opcional
+            tooltip="Regresar a la página anterior"
           />
 
           </div>

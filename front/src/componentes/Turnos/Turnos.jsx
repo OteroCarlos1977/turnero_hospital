@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button/Button';
 import { useNavigate } from "react-router-dom";
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +12,7 @@ export function Turnos() {
   const [turnos, setTurnos] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showTableHeader, setShowTableHeader] = useState(false); // Nuevo estado
+  const [showTableHeader, setShowTableHeader] = useState(false);
   const navigate = useNavigate();
   
   const fetchTurnos = async () => {
@@ -22,24 +21,21 @@ export function Turnos() {
       return;
     }
     setLoading(true);
-    setShowTableHeader(false); // Oculta el encabezado antes de buscar
+    setShowTableHeader(false);
     try {
-      console.log('DNI ingresado:', dni);
       const response = await apiFetch(`/api/turnos/${dni}`);
       const data = await response.json();
-      console.log(data); 
       if (!data.error) {
         const turnosFiltrados = data.body.filter(turno => {
           const fechaTurno = new Date(turno.fecha_turno);
-          const hoy = new Date(); // Fecha actual
-          hoy.setHours(0, 0, 0, 0); // Normaliza a inicio del día
-          return fechaTurno >= hoy; // Compara solo fechas
+          const hoy = new Date();
+          hoy.setHours(0, 0, 0, 0);
+          return fechaTurno >= hoy;
         });
-        console.log('Turnos filtrados:', turnosFiltrados);
         setTurnos(turnosFiltrados);
         setError('');
         if (turnosFiltrados.length > 0) {
-          setShowTableHeader(true); // Muestra el encabezado si hay turnos
+          setShowTableHeader(true);
         }
       } else {
         setError('No se pudieron obtener los turnos.');
@@ -52,7 +48,6 @@ export function Turnos() {
 
   const cancelarTurno = async (id) => {
     try {
-      // Mostrar el diálogo de confirmación
       const result = await Swal.fire({
         title: '¿Está seguro?',
         text: 'No podrá revertir esta acción.',
@@ -64,18 +59,16 @@ export function Turnos() {
         cancelButtonText: 'Cancelar',
       });
   
-      // Si el usuario confirma, procede con la cancelación
       if (result.isConfirmed) {
         const response = await apiFetch(`/api/turnos`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ id }), // Envía el ID del turno en el cuerpo
+          body: JSON.stringify({ id }),
         });
   
         if (response.ok) {
-          // Actualiza el estado local
           setTurnos(turnos.filter(turno => turno.id !== id));
           Swal.fire('Eliminado', 'El turno ha sido cancelado.', 'success');
         } else {
@@ -113,7 +106,7 @@ export function Turnos() {
       {loading && <p>Cargando...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {showTableHeader && ( // Solo muestra la tabla si showTableHeader es true
+      {showTableHeader && (
         <table>
           <thead>
             <tr>

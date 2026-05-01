@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { InputField } from "../InputField/InputField";
@@ -56,7 +55,6 @@ export function Editar() {
 
           const response = await apiFetch(url, { auth: activeTab === "usuarios" });
           const data = await response.json();
-          console.log("Datos recibidos:", data);
 
           if (!data.error && data.body.length > 0) {
             const registro = data.body[0]; // Accede al primer elemento del array
@@ -295,7 +293,7 @@ export function Editar() {
         <Button
         texto="  Guardar"
         style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '5px' }}
-        onClick={() => console.log('Guardar Cambios')}
+        type="submit"
         icono={faSave}
         tooltip="Guardar los cambios realizados"
       />

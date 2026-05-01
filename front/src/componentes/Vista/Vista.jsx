@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import {faTimes, faSave, faEdit, faTrash, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -103,8 +102,13 @@ export function Vista() {
     setNuevoRegistro({ ...nuevoRegistro, [name]: value });
   };
 
-  const handleEdit = (id) => {
-    console.log("Esta es un Editar", id);
+  const handleEdit = () => {
+    Swal.fire({
+      title: "Edición pendiente",
+      text: "La edición de horarios todavía no está implementada.",
+      icon: "info",
+      confirmButtonText: "Aceptar",
+    });
   };
 
   const handleDelete = async (id) => {

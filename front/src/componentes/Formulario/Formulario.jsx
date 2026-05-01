@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import { Button } from "../Button/Button";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -23,8 +21,6 @@ export function Formulario() {
     dia,
     horario
   } = location.state || {};
-
-  console.log(nombre_especialidad);
 
   // Formatear la fecha
   const nuevoDia = dia.match(/(\d{1,2})\/(\d{1,2})/);
