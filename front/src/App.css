@@ -5,7 +5,7 @@
 .containerPrincipal {
   width: min(1180px, calc(100vw - 32px));
   margin: 0 auto;
-  padding: 188px 0 56px;
+  padding: 116px 0 32px;
 }
 
 .containerPrincipal > button {
@@ -14,7 +14,7 @@
 }
 
 .home-panel {
-  min-height: calc(100vh - 180px);
+  min-height: calc(100vh - 148px);
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
   align-items: center;
@@ -94,6 +94,10 @@
 }
 
 @media (max-width: 800px) {
+  .containerPrincipal {
+    padding-top: 104px;
+  }
+
   .home-panel {
     min-height: auto;
     grid-template-columns: 1fr;

@@ -2,16 +2,17 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 1000;
-  height: 150px;
+  height: 92px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: 0 clamp(20px, 5vw, 56px);
+  padding: 0 clamp(18px, 5vw, 56px);
   background: rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(10px);
+  overflow: visible;
 }
 
 .navbar-brand {
@@ -23,8 +24,8 @@
 }
 
 .navbar-logo {
-  width: 200px;
-  height: 132px;
+  width: clamp(220px, 28vw, 320px);
+  height: 72px;
   object-fit: contain;
   filter: drop-shadow(0 8px 18px rgba(23, 32, 42, 0.16));
 }
@@ -59,6 +60,7 @@
 
 @media (max-width: 640px) {
   .navbar {
+    height: 80px;
     padding: 0 var(--space-4);
   }
 
@@ -67,7 +69,12 @@
   }
 
   .navbar-logo {
-    width: 94px;
-    height: 94px;
+    width: 160px;
+    height: 48px;
+  }
+
+  .navbar .btn {
+    min-width: 44px;
+    height: 44px;
   }
 }
