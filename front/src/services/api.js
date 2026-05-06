@@ -1,7 +1,7 @@
-import { mockApiFetch } from './mockApi';
+import { mockApiFetch } from './mockApi.js';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const API_MODE = import.meta.env.VITE_API_MODE || 'mock';
+const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:3000';
+const API_MODE = import.meta.env?.VITE_API_MODE || 'mock';
 
 export function apiUrl(path) {
   return `${API_BASE_URL}${path}`;

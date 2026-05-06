@@ -84,7 +84,7 @@ npm run build
 
 Los tests, el lint y el build fueron validados luego de la limpieza de comentarios, ajustes visuales del navbar y cobertura inicial del modo mock.
 
-Los tests actuales cubren login mock, rechazo de credenciales invalidas, disponibilidad por especialidad, reserva de turnos, prevencion de turnos duplicados, eliminacion y proteccion basica por token local.
+Los tests actuales cubren login mock, rechazo de credenciales invalidas, disponibilidad por especialidad, reserva de turnos, prevencion de turnos duplicados, eliminacion, proteccion basica por token local y helpers de la capa `api.js`.
 
 ## Deploy En Vercel
 
