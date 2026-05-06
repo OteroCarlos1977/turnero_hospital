@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 import Modal from './Modal';
 
 const ModalContext = createContext();
@@ -7,7 +6,6 @@ const ModalContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
 export const useModal = () => useContext(ModalContext);
 
-// eslint-disable-next-line react/prop-types
 export const ModalProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');

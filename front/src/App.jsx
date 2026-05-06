@@ -1,7 +1,4 @@
-
-
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Tarjeta } from './componentes/Tarjeta/Tarjeta.jsx';
 import { Formulario } from './componentes/Formulario/Formulario.jsx';
@@ -32,12 +29,12 @@ function App() {
 
   const handleLoginSuccess = (token) => {
     setIsLoggedIn(true);
-    localStorage.setItem('authToken', token); // Guardar el token en localStorage
+    localStorage.setItem('authToken', token);
   };
 
   const handleLogoutClick = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('authToken'); // Eliminar el token del localStorage
+    localStorage.removeItem('authToken');
   };
 
   return (

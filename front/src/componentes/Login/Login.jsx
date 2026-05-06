@@ -6,7 +6,6 @@ import { Button } from "../Button/Button";
 import { apiFetch } from "../../services/api";
 import './Login.css'
 
-// eslint-disable-next-line react/prop-types
 export function Login({ onLoginSuccess }) {
   const [data, setData] = useState({ usuario: '', password: '' });
   const [loginError, setLoginError] = useState('');

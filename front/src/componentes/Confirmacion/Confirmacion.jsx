@@ -18,7 +18,6 @@ export function Confirmacion() {
     });
   }
 
-  // Obteniendo los datos pasados a través de la navegación
   const { pacienteData,
     
     nombre_especialidad,
@@ -26,7 +25,6 @@ export function Confirmacion() {
     dia,
     horario, } = location.state || {};
 
-  // Función que se ejecuta al hacer clic en "Aceptar Turno"
   const handleAceptar = async () => {
     if (!pacienteData?.email) {
       await Swal.fire({
@@ -41,7 +39,6 @@ export function Confirmacion() {
     setEnviando(true);
 
     try {
-      // Envía un correo electrónico con los detalles del turno
       const response = await apiFetch("/api/enviarEmail", {
         method: "POST",
         headers: {
@@ -68,8 +65,7 @@ export function Confirmacion() {
       }
 
       await showAlert();
-      
-      // Redirige a la página principal o a otra página
+
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el correo:", error);

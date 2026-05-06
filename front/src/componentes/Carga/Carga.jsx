@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../Button/Button.jsx";
 import { InputField } from "../InputField/InputField";
 import Swal from "sweetalert2";
@@ -37,7 +36,7 @@ export function Carga() {
         const response = await apiFetch("/api/especialidad");
         const data = await response.json();
         if (!data.error) {
-          setEspecialidades(data.body); // Guarda las especialidades en el estado
+          setEspecialidades(data.body);
         }
       } catch (error) {
         console.error("Error al obtener especialidades:", error);
@@ -46,14 +45,12 @@ export function Carga() {
     fetchEspecialidades();
   }, []);
 
-  // Función para convertir la fecha de DD/MM/YYYY a YYYY-MM-DD
   const formatFecha = (fecha) => {
     const [day, month, year] = fecha.split("/");
     return `${year}-${month}-${day}`;
   };
 
   const onSubmit = async (data) => {
-    // Convierte la fecha antes de enviarla
     if (data.fecha_ingreso) {
       data.fecha_ingreso = formatFecha(data.fecha_ingreso);
     }
@@ -61,7 +58,6 @@ export function Carga() {
     const requestData = { id: 0, ...data };
     let endpoint = "";
 
-    // Selección de endpoint según la pestaña activa
     switch (activeTab) {
       case "medicos":
         endpoint = "/api/medicos";
@@ -147,7 +143,6 @@ export function Carga() {
                 errors={errors}
               />
 
-              {/* Campo de Fecha de Ingreso con formato DD/MM/YYYY */}
               <InputField
                 label="Fecha Ingreso (DD/MM/YYYY)"
                 id="fecha_ingreso"
@@ -278,7 +273,7 @@ export function Carga() {
 
           <div className="submit-button-container">
             <Button
-              type="submit" // Importante para que funcione como un botón de envío
+              type="submit"
               texto={` Guardar ${
                 activeTab === "medicos"
                   ? "Médico"

@@ -1,11 +1,20 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { Aviso } from "../Aviso/Aviso";
-import TurnosOtorgados from "../hooks/TurnosOtorgados"; // Importa el hook personalizado
+import TurnosOtorgados from "../hooks/TurnosOtorgados";
 import { apiFetch } from "../../services/api";
 import "./Tarjeta.css";
+
+const diasSemana = {
+  Domingo: 0,
+  Lunes: 1,
+  Martes: 2,
+  Miércoles: 3,
+  Jueves: 4,
+  Viernes: 5,
+  Sábado: 6,
+};
 
 export function Tarjeta() {
   const [disponibilidadProcesada, setDisponibilidadProcesada] = useState([]);
@@ -21,18 +30,6 @@ export function Tarjeta() {
 
   const turnosReservados = TurnosOtorgados(especialidadId);
 
-  // Mapeo de días a índices numéricos
-  const diasSemana = {
-    Domingo: 0,
-    Lunes: 1,
-    Martes: 2,
-    Miércoles: 3,
-    Jueves: 4,
-    Viernes: 5,
-    Sábado: 6,
-  };
-
-  // Función para obtener la próxima fecha para un día de la semana dado
   const getNextDate = (diaTexto) => {
     const diaIndice = diasSemana[diaTexto];
     if (diaIndice === undefined) return null;
@@ -40,23 +37,20 @@ export function Tarjeta() {
     const hoy = new Date();
     const hoyIndice = hoy.getDay();
     let diferencia = (diaIndice - hoyIndice + 7) % 7;
-    if (diferencia === 0) diferencia = 7; // Obtener la próxima semana si es el mismo día
+    if (diferencia === 0) diferencia = 7;
 
     const proximaFecha = new Date(hoy);
     proximaFecha.setDate(hoy.getDate() + diferencia);
 
-    // Formatear la fecha como 'lunes, 26/08'
     const opcionesFecha = { weekday: 'long', day: '2-digit', month: '2-digit' };
     const fechaFormateada = proximaFecha.toLocaleDateString("es-ES", opcionesFecha);
-    
-    // Convertir el nombre del día a minúsculas
+
     const diaFormateado = fechaFormateada.charAt(0).toLowerCase() + fechaFormateada.slice(1);
-    
+
     return diaFormateado;
   };
 
-  // Función para procesar la disponibilidad y generar intervalos de 30 minutos
-  const procesarDisponibilidad = (disponibilidad) => {
+  const procesarDisponibilidad = useCallback((disponibilidad) => {
     const disponibilidadGenerada = [];
 
     disponibilidad.forEach((item) => {
@@ -68,7 +62,7 @@ export function Tarjeta() {
       let horaActual = new Date(horaInicio);
 
       while (horaActual < horaFin) {
-        const horario = horaActual.toTimeString().slice(0, 5); // 'HH:MM'
+        const horario = horaActual.toTimeString().slice(0, 5);
         disponibilidadGenerada.push({
           medicoId: item.id,
           medicoNombre: `${item.nombre} ${item.apellido}`,
@@ -79,7 +73,7 @@ export function Tarjeta() {
       }
     });
 
-    // Filtrar los horarios que ya están reservados
+    // La demo calcula turnos de 30 minutos y excluye horarios ya reservados.
     const disponibilidadFiltrada = disponibilidadGenerada.filter(
       (slot) =>
         !turnosReservados.some(
@@ -91,7 +85,7 @@ export function Tarjeta() {
     );
 
     setDisponibilidadProcesada(disponibilidadFiltrada);
-  };
+  }, [turnosReservados]);
 
   useEffect(() => {
     const fetchDisponibilidad = async () => {
@@ -115,10 +109,8 @@ export function Tarjeta() {
     if (especialidadId) {
       fetchDisponibilidad();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [especialidadId, turnosReservados]);
+  }, [especialidadId, procesarDisponibilidad]);
 
-  // Agrupar la disponibilidad filtrada por médico y luego por día
   const disponibilidadAgrupada = disponibilidadProcesada.reduce((acc, slot) => {
     if (!acc[slot.medicoId]) {
       acc[slot.medicoId] = {
@@ -138,7 +130,6 @@ export function Tarjeta() {
       <div style={{ display: showMessage ? "none" : "block" }}>
         <h3 className="titulo-card">Especialidad: {especialidadNombre}</h3>
 
-        {/* Mostrar los médicos y sus horarios disponibles agrupados por día */}
         {Object.entries(disponibilidadAgrupada).map(([medicoId, medicoData]) => (
           <div key={medicoId} style={{ marginBottom: "20px" }}>
             <h3 className="nombre-medico">Dr: {medicoData.medicoNombre}</h3>
@@ -155,7 +146,6 @@ export function Tarjeta() {
                   <div>
                     {horarios.map((horario, index) => (
                       <div key={index}>
-                        {/* Mostrar un radio button para cada horario disponible */}
                         <label>
                           <input
                             type="radio"
@@ -190,7 +180,6 @@ export function Tarjeta() {
           </div>
         ))}
 
-        {/* Botón para continuar, que navega a un formulario si se ha seleccionado un turno */}
         <Button
           texto="Continuar"
           style={{ backgroundColor: "rgba(86, 124, 219, 0.8)" }}
@@ -207,12 +196,11 @@ export function Tarjeta() {
                 },
               });
             } else {
-              setShowMessage(true); // Mostrar aviso si no se ha seleccionado un turno
+              setShowMessage(true);
             }
           }}
         />
 
-        {/* Botón para volver a la página de selección */}
         <Button
           texto="Volver"
           style={{ backgroundColor: "rgba(117, 225, 113, 0.8)" }}
@@ -220,7 +208,6 @@ export function Tarjeta() {
         />
       </div>
 
-      {/* Componente de aviso */}
       {showMessage && (
         <div style={{ position: "fixed", top: "10%", left: "50%", transform: "translate(-50%, 0)", zIndex: 1000 }}>
           <Aviso

@@ -12,7 +12,6 @@ export function Formulario() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Extrae los datos del estado de la ubicación
   const {
     id_especialidad,
     nombre_especialidad,
@@ -22,18 +21,13 @@ export function Formulario() {
     horario
   } = location.state || {};
 
-  // Formatear la fecha
+  // La pantalla anterior entrega el dia como texto; la API guarda la fecha en formato ISO.
   const nuevoDia = dia.match(/(\d{1,2})\/(\d{1,2})/);
-  const day = nuevoDia ? nuevoDia[1].padStart(2, "0") : "01"; // Asegura que el día tenga 2 dígitos
-  const month = nuevoDia ? nuevoDia[2].padStart(2, "0") : "01"; // Asegura que el mes tenga 2 dígitos
-
-  // Defino el año 
-  const year = new Date().getFullYear(); // Año actual
-
-  // Crear la fecha en formato YYYY-MM-DD
+  const day = nuevoDia ? nuevoDia[1].padStart(2, "0") : "01";
+  const month = nuevoDia ? nuevoDia[2].padStart(2, "0") : "01";
+  const year = new Date().getFullYear();
   const fecha = `${year}-${month}-${day}`;
 
-  // Configuración del formulario con react-hook-form
   const {
     register,
     formState: { errors },
@@ -45,9 +39,8 @@ export function Formulario() {
 
   const onSubmit = async (data) => {
     const pacienteId = paciente?.id || 0;
-    const hoy = new Date().toISOString().split("T")[0]; // Fecha actual
+    const hoy = new Date().toISOString().split("T")[0];
 
-    // Preparar los datos del paciente
     const pacienteData = {
       id: pacienteId,
       nombre: data.nombre,
@@ -62,7 +55,6 @@ export function Formulario() {
       fecha_registro: hoy,
     };
 
-    // Preparar los datos del turno
     const turnoData = {
       id: 0,
       especialidad_id: id_especialidad,
@@ -73,7 +65,6 @@ export function Formulario() {
     };
 
     try {
-      // Enviar datos del paciente
       const responsePaciente = await apiFetch(
         "/api/pacientes",
         {
@@ -89,7 +80,6 @@ export function Formulario() {
         throw new Error("Error al registrar el paciente");
       }
 
-      // Enviar datos del turno
       const responseTurno = await apiFetch("/api/turnos", {
         method: "POST",
         headers: {
@@ -112,7 +102,7 @@ export function Formulario() {
           dia,
           horario,
         },
-      }); // Redirige a una página de confirmación
+      });
     } catch (error) {
       console.error("Error en el envío:", error);
       Swal.fire({

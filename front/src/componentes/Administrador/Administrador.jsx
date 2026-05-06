@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import {faUser, faUserMd, faStethoscope, faCalendarCheck, faEye, faEdit, faTrash, faPlusCircle, faList, faIdCard, faBriefcaseMedical, faHospitalUser } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +18,6 @@ export function Administrador() {
   const [activeTab, setActiveTab] = useState('medicos');
   
 
-  // Efecto para obtener la lista de médicos
   useEffect(() => {
     if (activeTab === 'medicos') {
       const fetchMedicos = async () => {
@@ -86,9 +84,6 @@ export function Administrador() {
     }
   }, [activeTab]);
 
-  
-
-  // Filtrar médicos según el término de búsqueda
   const filteredMedicos = medicos.filter(medico =>
     Object.values(medico).some(value =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -108,13 +103,11 @@ export function Administrador() {
   );
 
   
-  // Función para cambiar de pestaña
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    setSearchTerm(''); // Reiniciar el término de búsqueda al cambiar de pestaña
+    setSearchTerm('');
   };
 
-  // Usar navigate para redirigir a Carga con activeTab
   const handleShowCarga = () => {
     navigate('/carga', { state: { activeTab } });
   };
@@ -123,7 +116,6 @@ export function Administrador() {
 
 const handleDelete = async (id) => {
     try {
-        // Mostrar el mensaje de confirmación utilizando SweetAlert2
         const result = await Swal.fire({
             title: '¿Está seguro?',
             text: 'No podrá revertir esta acción.',
@@ -136,14 +128,13 @@ const handleDelete = async (id) => {
         });
 
         if (!result.isConfirmed) {
-            // Si el usuario cancela, no se procede con la eliminación
             return;
         }
 
         let url = '';
         let updateState;
 
-        // Seleccionamos la URL y la función de actualización según la pestaña activa
+        // Cada pestaña elimina contra un endpoint distinto y actualiza su propio listado.
         switch (activeTab) {
             case 'medicos':
                 url = '/api/medicos';
@@ -162,21 +153,18 @@ const handleDelete = async (id) => {
                 return;
         }
 
-        // Realizamos la solicitud PUT para eliminar el registro
         const response = await apiFetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             auth: true,
-            body: JSON.stringify({ id }), // Enviamos el ID en el cuerpo de la solicitud
+            body: JSON.stringify({ id }),
         });
 
         if (response.ok) {
-            // Filtramos el estado actual para eliminar el elemento borrado
             updateState(prevItems => prevItems.filter(item => item.id !== id));
 
-            // Mostrar mensaje de éxito
             await Swal.fire({
                 title: 'Eliminado',
                 text: 'El registro se ha eliminado satisfactoriamente.',
@@ -193,7 +181,7 @@ const handleDelete = async (id) => {
                 confirmButtonText: 'Aceptar',
             });
         }
-    } catch (err) {
+    } catch {
         Swal.fire({
             title: 'Error',
             text: `Error al eliminar el elemento en la pestaña ${activeTab}.`,
@@ -210,7 +198,6 @@ const handleView = (id) => {
 
 const handleEdit = (id) => {
   navigate('/editar', { state: { activeTab, id } });
-  // Lógica para editar el médico
 };
 
 
@@ -229,8 +216,6 @@ const handleEdit = (id) => {
         onClick={handleShowCarga}
       />
     </div> 
-
-     {/* Barra de navegación de pestañas */}
      <div className="tabs">
       <Button
           tooltip="Medicos" 
@@ -257,7 +242,6 @@ const handleEdit = (id) => {
           onClick={() => handleTabChange('turnos')}
         />
       </div>
-      {/* Input de búsqueda */}
       <div className="admin-toolbar">
         <input
           className='busqueda'
@@ -268,7 +252,6 @@ const handleEdit = (id) => {
         />
       </div>
 
-      {/* Mostrar contenido según la pestaña activa */}
       {activeTab === 'medicos' && (
         <table>
           <thead>

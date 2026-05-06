@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
-// eslint-disable-next-line react/prop-types
 export const InputField = ({ label, id, register, required = false, pattern = null, errors = {}, type = "text", options = [] }) => {
   return (
     <div className="form-group">

@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '../Button/Button'; // Asegúrate de importar el botón correctamente
+import { Button } from '../Button/Button';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import jsPDF from 'jspdf';
 import { apiFetch } from '../../services/api';
@@ -9,7 +8,7 @@ import { apiFetch } from '../../services/api';
 export const VistaTurnos = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { vista } = location.state || { vista: 'todos' }; // Valor predeterminado
+  const { vista } = location.state || { vista: 'todos' };
 
   const [turnos, setTurnos] = useState([]);
   const [filteredTurnos, setFilteredTurnos] = useState([]);
@@ -49,7 +48,6 @@ export const VistaTurnos = () => {
 
           setTurnos(formattedData);
 
-          // Generar listas únicas de médicos y especialidades
           const uniqueMedicos = [...new Set(formattedData.map(turno => `${turno.medico_nombre} ${turno.medico_apellido}`))];
           const uniqueEspecialidades = [...new Set(formattedData.map(turno => turno.especialidad))];
 
