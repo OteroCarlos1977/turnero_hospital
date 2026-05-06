@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'turnero_hospital_mock_db_v1';
-const EMAIL_MODE = import.meta.env.VITE_EMAIL_MODE || 'mock';
+const EMAIL_MODE = import.meta.env?.VITE_EMAIL_MODE || 'mock';
 
 const seedDb = {
   especialidad: [
