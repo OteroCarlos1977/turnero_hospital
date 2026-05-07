@@ -134,9 +134,3 @@ docs/
 - La demo usa credenciales simples porque corre en modo presentacion.
 - Para una version productiva se recomienda backend real, JWT firmado, hashing de contrasenas y base persistente.
 - Los datos de `localStorage` no deben considerarse persistencia real.
-
-## Mejoras Recomendadas
-
-- Agregar tests de flujo para reserva, cancelacion y panel administrativo.
-- Sustituir credenciales demo por autenticacion real si el proyecto evoluciona fuera de presentacion.
-- Revisar tamanos de chunks si se agregan mas funcionalidades de documentos PDF.
