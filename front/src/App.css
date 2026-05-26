@@ -13,6 +13,33 @@
   margin-bottom: var(--space-3);
 }
 
+.developerFooter {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto 24px;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.developerFooterLogo {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(37, 111, 125, 0.24);
+  border-radius: var(--radius-md);
+  display: inline-grid;
+  place-items: center;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
 .home-panel {
   min-height: calc(100vh - 148px);
   display: grid;

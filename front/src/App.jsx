@@ -59,6 +59,10 @@ function App() {
           <Route path="/vista-turnos" element={<VistaTurnos />} />
         </Routes>
       </div>
+      <footer className="developerFooter" aria-label="Marca de desarrollo">
+        <span className="developerFooterLogo">CO</span>
+        <span>Desarrollado por Carlos Otero</span>
+      </footer>
     </Router>
   );
 }
